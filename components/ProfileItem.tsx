@@ -8,14 +8,19 @@ const ProfileItem = ({
   description,
   icon,
   type,
+  action,
 }: {
   title: string;
   description?: string;
   icon: React.ReactNode;
   type: string | "edit" | "detail" | "logout";
+  action?: () => void;
 }) => {
   return (
-    <div className="flex items-center gap-2 justify-between border-b pb-6">
+    <div
+      className="flex items-center gap-2 justify-between border-b pb-6 cursor-pointer"
+      onClick={action}
+    >
       <div className="flex items-center gap-2">
         {icon}
         <div>
