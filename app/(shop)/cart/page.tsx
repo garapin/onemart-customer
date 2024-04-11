@@ -68,7 +68,10 @@ const CartPage = () => {
           <p className="font-semibold">Total Pembayaran</p>
           <p className="font-semibold">Rp.10.000</p>
         </div>
-        <button className="text-center border-2 border-primary w-full bg-primary text-white hover:bg-primary/80 py-4 rounded-lg">
+        <button
+          className="text-center border-2 border-primary w-full bg-primary text-white hover:bg-primary/80 py-4 rounded-lg"
+          onClick={() => router.push("/payment")}
+        >
           Pembayaran
         </button>
       </div>
