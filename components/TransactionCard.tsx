@@ -1,7 +1,7 @@
 import { CalendarIconSVG } from "@/assets/calendar";
 import React from "react";
 
-const CartCard = ({ data }: any) => {
+const TransactionCard = ({ data }: any) => {
   return (
     <div className="flex items-center justify-between border-b pb-4">
       <div className="flex items-center gap-2">
@@ -24,4 +24,4 @@ const CartCard = ({ data }: any) => {
   );
 };
 
-export default CartCard;
+export default TransactionCard;

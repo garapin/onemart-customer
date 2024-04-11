@@ -4,9 +4,11 @@ import { CartOutlineIconSVG } from "@/assets/cart-outline";
 import { FilterIconSVG } from "@/assets/filter";
 import { SearchIconSVG } from "@/assets/search";
 import ProductCard from "@/components/ProductCard";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Shop = () => {
+  const router = useRouter();
   const [categories, setCategories] = React.useState([
     "Sayuran",
     "Buah",
@@ -30,7 +32,10 @@ const Shop = () => {
           />
         </div>
         <div>
-          <CartOutlineIconSVG className="w-10 h-10" />
+          <CartOutlineIconSVG
+            className="w-10 h-10 cursor-pointer"
+            onClick={() => router.push("/cart")}
+          />
         </div>
       </div>
       <div className="flex items-center gap-2">

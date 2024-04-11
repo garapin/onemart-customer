@@ -3,8 +3,10 @@ import { ShopCartAddIconSVG } from "@/assets/shop-cart-add.tsx";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import React from "react";
 import { useAddToCartModal } from "../(components)/useAddToCartModal";
+import { useRouter } from "next/navigation";
 
 const ScanQR = () => {
+  const router = useRouter();
   const [enabled, setEnabled] = React.useState(false);
   const [qty, setQty] = React.useState(1);
   const [result, setResult] = React.useState<any>(null);
@@ -79,7 +81,10 @@ const ScanQR = () => {
               <p className="font-semibold">Rp.10.000</p>
             </div>
             <div className="flex items-center gap-2">
-              <button className="text-center bg-white py-3 rounded-lg flex items-center justify-center border-2 border-primary px-14">
+              <button
+                className="text-center bg-white py-3 rounded-lg flex items-center justify-center border-2 border-primary px-14"
+                onClick={() => router.push("/cart")}
+              >
                 <ShopCartAddIconSVG className="w-8 h-8" />
               </button>
               <button

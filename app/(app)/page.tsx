@@ -1,7 +1,7 @@
 "use client";
 import { QrCodeIconSVG } from "@/assets/qrcode";
-import CartCard from "@/components/CartCard";
 import HeaderApp from "@/components/HeaderApp";
+import TransactionCard from "@/components/TransactionCard";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -26,7 +26,7 @@ const Dashboard = () => {
         </div>
         <div className="items space-y-4">
           {datas.map((data, index) => (
-            <CartCard key={index} data={data} />
+            <TransactionCard key={index} data={data} />
           ))}
         </div>
       </div>

@@ -1,9 +1,11 @@
 import { CartIconSVG } from "@/assets/cart";
 import { ChevronRightIconSVG } from "@/assets/chevron-right";
 import { StoreIconSVG } from "@/assets/store-icon";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const HeaderApp = () => {
+  const router = useRouter();
   return (
     <div className="bg-gradient-to-r from-[#373B44] to-[#0C2BAA] p-6">
       <div className="flex items-center justify-between gap-2">
@@ -17,7 +19,10 @@ const HeaderApp = () => {
             <ChevronRightIconSVG className="w-3 h-3" />
           </div>
         </div>
-        <CartIconSVG className="w-10 h-10" />
+        <CartIconSVG
+          className="cursor-pointer w-10 h-10"
+          onClick={() => router.push("/cart")}
+        />
       </div>
     </div>
   );

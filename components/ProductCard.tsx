@@ -21,7 +21,7 @@ const ProductCard = () => {
             <p className="text-red-600 line-through text-sm">Rp.21.000</p>
             <p className="text-xs text-slate-400 font-light">140 Terjual</p>
           </div>
-          <div className="bg-primary rounded-full p-3">
+          <div className="bg-primary rounded-full p-3 cursor-pointer">
             <PlusIconSVG className="w-4 h-4" />
           </div>
         </div>
