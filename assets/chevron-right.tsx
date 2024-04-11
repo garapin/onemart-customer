@@ -12,7 +12,7 @@ export const ChevronRightIconSVG = (props: any) => {
     >
       <path
         d="M1 0.666749L5 4.66675L1 8.66675"
-        stroke="white"
+        stroke={props.color || "#fff"}
         stroke-linecap="round"
         stroke-linejoin="round"
       />
