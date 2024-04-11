@@ -33,13 +33,13 @@ const CartPage = () => {
         </div>
         <div className="flex items-center gap-4">
           <button
-            className="text-center bg-white py-3 rounded-full flex items-center justify-center border-2 border-primary px-14 text-primary w-full"
+            className="text-center bg-white py-3 rounded-full flex items-center justify-center border-2 border-primary text-primary w-full break-words"
             onClick={() => router.push("/cart")}
           >
             + Add Item
           </button>
           <button
-            className="text-center bg-white py-3 rounded-full flex items-center gap-2 justify-center border-2 border-primary px-14 text-primary w-full"
+            className="text-center bg-white py-3 rounded-full flex items-center gap-2 justify-center border-2 border-primary text-primary w-full"
             onClick={() => router.push("/cart")}
           >
             <QrCodeIconSVG color="#102CA0" className="h-4 w-4" />{" "}
