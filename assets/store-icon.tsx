@@ -13,32 +13,32 @@ export const StoreIconSVG = (props: any) => {
       <path
         d="M2.25 6.54321V9.75002C2.25 9.84947 2.28951 9.94486 2.35984 10.0152C2.43016 10.0855 2.52554 10.125 2.625 10.125H9.375C9.47446 10.125 9.56984 10.0855 9.64017 10.0152C9.71049 9.94486 9.75 9.84947 9.75 9.75002V6.54329"
         stroke="white"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M2.53286 1.875H9.46714C9.54863 1.875 9.6279 1.90155 9.69296 1.95062C9.75802 1.99969 9.80532 2.06862 9.82771 2.14698L10.5 4.5H1.5L2.17229 2.14698C2.19468 2.06862 2.24198 1.99969 2.30704 1.95062C2.3721 1.90155 2.45137 1.875 2.53286 1.875Z"
         stroke="white"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4.5 4.5V5.25C4.5 5.64782 4.34196 6.02936 4.06066 6.31066C3.77936 6.59196 3.39782 6.75 3 6.75C2.60218 6.75 2.22064 6.59196 1.93934 6.31066C1.65804 6.02936 1.5 5.64782 1.5 5.25V4.5"
         stroke="white"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.5 4.5V5.25C7.5 5.64782 7.34196 6.02936 7.06066 6.31066C6.77936 6.59196 6.39782 6.75 6 6.75C5.60218 6.75 5.22064 6.59196 4.93934 6.31066C4.65804 6.02936 4.5 5.64782 4.5 5.25V4.5"
         stroke="white"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.5 4.5V5.25C10.5 5.64782 10.342 6.02936 10.0607 6.31066C9.77936 6.59196 9.39782 6.75 9 6.75C8.60218 6.75 8.22064 6.59196 7.93934 6.31066C7.65804 6.02936 7.5 5.64782 7.5 5.25V4.5"
         stroke="white"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

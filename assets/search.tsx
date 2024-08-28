@@ -15,14 +15,14 @@ export const SearchIconSVG = (props: any) => {
         cy="4.9027"
         r="3.74523"
         stroke="#696F79"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.50781 7.70215L8.97616 9.16668"
         stroke="#696F79"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

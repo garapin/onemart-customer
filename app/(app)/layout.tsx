@@ -10,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="pb-16">{children}</div>
+        <div className={`${inter.className} max-w-screen-sm mx-auto`}>
+          {children}
+        </div>
         <BottomTabNavigator />
       </body>
     </html>

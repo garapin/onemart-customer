@@ -13,8 +13,8 @@ export const PlusIconSVG = (props: any) => {
       <path
         d="M1.1665 6.99996H12.8332M6.99984 1.16663V12.8333"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
     </svg>
   );

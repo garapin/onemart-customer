@@ -13,9 +13,9 @@ export const ChevronLeftIconSVG = (props: any) => {
       <path
         d="M8.5 15L1.5 8L8.5 1"
         stroke="#242424"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
