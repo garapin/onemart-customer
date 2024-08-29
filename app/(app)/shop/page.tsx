@@ -43,8 +43,11 @@ const Shop = () => {
           <FilterIconSVG className="w-4 h-4" />
         </div>
         <div className="flex items-center gap-2 overflow-x-auto">
-          {categories.map((category) => (
-            <div className="p-2 border rounded-md text-slate-500 text-sm cursor-pointer">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="p-2 border rounded-md text-slate-500 text-sm cursor-pointer"
+            >
               {category}
             </div>
           ))}

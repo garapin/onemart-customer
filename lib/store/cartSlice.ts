@@ -6,12 +6,14 @@ interface CartState {
   items: Product[];
   total: number;
   targetDatabase: string;
+  token?: string;
 }
 
 const initialState: CartState = {
   items: [], // Mulai dengan state kosong di server
   total: 0,
   targetDatabase: "",
+  token: "",
 };
 
 export const cartSlice = createSlice({
@@ -92,6 +94,12 @@ export const cartSlice = createSlice({
         localStorage.setItem("targetdatabase", action.payload);
       }
     },
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", action.payload);
+      }
+    },
   },
 });
 
@@ -102,6 +110,7 @@ export const {
   decreaseQuantity,
   setCart,
   setTargetDatabase,
+  setToken,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

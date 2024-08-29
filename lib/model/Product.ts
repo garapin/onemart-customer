@@ -1,5 +1,3 @@
-// src/models/Product.ts
-
 interface Brand {
   _id: string;
   brand: string;

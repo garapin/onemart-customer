@@ -31,6 +31,8 @@ const ScanQR = () => {
   React.useEffect(() => {
     setEnabled(true);
     return () => {
+      console.log(productid);
+
       setEnabled(false);
       if (productid !== null && targetdatabase !== null) {
         dispatch(setTargetDatabase(targetdatabase));
