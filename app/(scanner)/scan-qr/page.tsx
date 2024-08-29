@@ -1,7 +1,7 @@
 "use client";
 
 import { Provider } from "react-redux";
-import { store } from "@/app/store/store";
+import { store } from "@/lib/store/store";
 import { useEffect } from "react";
 
 import React from "react";

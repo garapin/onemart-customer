@@ -5,10 +5,10 @@ import CartItem from "@/components/CartItem";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/app/store/store";
-import { setCart, removeItem, setTargetDatabase } from "@/app/store/cartSlice";
+import { RootState } from "@/lib/store/store";
+import { setCart, removeItem, setTargetDatabase } from "@/lib/store/cartSlice";
 import { toast } from "react-hot-toast";
-import { isTemplateSpan } from "typescript";
+import ApiService from "@/lib/service";
 
 const CartPage = () => {
   const router = useRouter();
@@ -19,41 +19,7 @@ const CartPage = () => {
   );
 
   const [email, setEmail] = useState("");
-
   const dispatch = useDispatch();
-
-  const fetchData = async (
-    body: any,
-    callback: (data: any, error?: any) => void
-  ) => {
-    const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseApiUrl}/store/transcation/create-invoice-one-mart-customer`;
-    console.log(body);
-
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type
-          "target-database": target_database,
-        },
-        body: JSON.stringify(body), // Convert the body object to a JSON string
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const result = await res.json();
-      console.log(result.data);
-
-      callback(result.data);
-
-      console.log(result.data);
-    } catch (err: any) {
-    } finally {
-    }
-  };
 
   React.useEffect(() => {
     const storedCart = localStorage.getItem("cart");
@@ -66,9 +32,6 @@ const CartPage = () => {
     }
   }, [dispatch]);
 
-  const handleRemoveFromCart = (id: string) => {
-    dispatch(removeItem(id));
-  };
   return (
     <div>
       <div className="flex items-center gap-2 border-b pb-6 p-6">
@@ -157,8 +120,10 @@ const CartPage = () => {
             const sendItems: any[] = []; // Array that can hold any type of elements
             cart.forEach((item) => {
               sendItems.push({
-                productID: item._id,
+                productId: item._id,
                 quantity: item.quantity,
+                rakId: item.rak_id,
+                positionId: item.position_id,
               });
             });
 
@@ -169,7 +134,7 @@ const CartPage = () => {
             };
             console.log(data);
 
-            fetchData(data, (data, error) => {
+            ApiService.createInvoices(data, target_database, (data, error) => {
               if (error) {
                 toast.error("Gagal membuat invoice"); // Displays a success message
                 return;

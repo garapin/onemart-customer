@@ -1,7 +1,7 @@
 import React from "react";
-import { Product } from "../app/model/Product";
+import { Product } from "../lib/model/Product";
 import { useSelector, useDispatch } from "react-redux";
-import { decreaseQuantity, increaseQuantity } from "@/app/store/cartSlice";
+import { decreaseQuantity, increaseQuantity } from "@/lib/store/cartSlice";
 
 interface ProductDetailProps {
   product: Product;

@@ -11,7 +11,7 @@ export const useAddToCartModal = () => {
     if (openModal) {
       setTimeout(() => {
         setOpenModal(false);
-      }, 1500);
+      }, 2000);
     }
   }, [openModal]);
 

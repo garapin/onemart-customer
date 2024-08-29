@@ -1,14 +1,15 @@
 "use client";
 import React from "react";
 import { Provider } from "react-redux";
-import { RootState, store } from "@/app/store/store";
+import { RootState, store } from "@/lib/store/store";
 import { useAddToCartModal } from "../(components)/useAddToCartModal";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Product } from "@/app/model/Product";
+import { Product } from "@/lib/model/Product";
 import { ShopCartAddIconSVG } from "@/assets/shop-cart-add.tsx";
 import { Scanner } from "@yudiel/react-qr-scanner";
-import { addItem, setTargetDatabase } from "@/app/store/cartSlice";
+import { addItem, setTargetDatabase } from "@/lib/store/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
+import ApiService from "@/lib/service";
 
 const ScanQR = () => {
   const router = useRouter();
@@ -27,46 +28,21 @@ const ScanQR = () => {
 
   // console.log(targetdatabase);
 
-  const fetchData = async (productid: string, target_database: string) => {
-    setLoading(true);
-    setError(null); // Reset error state
-    const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseApiUrl}raku/supplier/product/${productid}`;
-    dispatch(setTargetDatabase(target_database));
-
-    try {
-      const res = await fetch(url, {
-        method: "GET",
-        headers: {
-          "target-database": target_database,
-        },
-      });
-      // console.log(res.headers);
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const result = await res.json();
-      setProduct(result.data);
-
-      console.log(result.data);
-
-      // setProduct(result.data);
-      setResult(result.data);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   React.useEffect(() => {
     setEnabled(true);
     return () => {
       setEnabled(false);
       if (productid !== null && targetdatabase !== null) {
-        fetchData(productid, targetdatabase);
+        dispatch(setTargetDatabase(targetdatabase));
+        ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
+          data.rak_id.push(searchParams.get("rakid"));
+          data.position_id.push(searchParams.get("positionid"));
+          console.log(data);
+
+          setProduct(data);
+          setLoading(false);
+          setResult(data);
+        });
       }
     };
   }, []);
@@ -77,19 +53,28 @@ const ScanQR = () => {
       <Scanner
         allowMultiple={true}
         onScan={(result) => {
-          // console.log(result[0]['rawValue']);
-          const url = result[0]["rawValue"];
-          // const url =
-          //   "http://localhost:3000/scan-qr?productid=667443ee8bbc090e47dd96b4&targetdatabase=mr-fran_puri_e51cf5fa-0b3";
+          const url = new URL(result[0]["rawValue"]);
 
-          const productid = url.split("?")[1].split("&")[0].split("=")[1];
-          const target_database = url.split("?")[1].split("&")[1].split("=")[1];
-          fetchData(productid, target_database);
+          const params = url.searchParams;
 
-          // console.log(baseUrl);
-          // console.log(target_database);
-          // fetchData(baseUrl, target_database);
-          // setResult(data);
+          // console.log(params); // 667443ee8bbc090e47dd96b4
+          // console.log(params.get("rakid")); // 66767b550f9f3b744fb640b5
+          // console.log(params.get("positionid")); // 66767b550f9f3b744fb640b7
+          // console.log(params.get("targetdatabase")); // mr-fran_puri_e51cf5fa-0b3
+
+          ApiService.fetchDetailProduct(
+            params.get("productid")!,
+            params.get("targetdatabase")!,
+            (data) => {
+              data.rak_id.push(params.get("rakid"));
+              data.position_id.push(params.get("positionid"));
+              console.log(data);
+
+              setProduct(data);
+              setLoading(false);
+              setResult(data);
+            }
+          );
         }}
         styles={{
           video: {
