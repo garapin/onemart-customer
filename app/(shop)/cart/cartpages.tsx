@@ -139,7 +139,9 @@ const CartPage = () => {
                 toast.error("Gagal membuat invoice"); // Displays a success message
                 return;
               } else {
-                router.push(data.webhook.invoiceUrl);
+                console.log(data.invoice.invoiceUrl);
+
+                router.push(data.invoice.invoiceUrl);
               }
             });
           }}

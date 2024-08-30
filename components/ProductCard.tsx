@@ -1,4 +1,5 @@
 import { PlusIconSVG } from "@/assets/plus";
+import Image from "next/image";
 import React from "react";
 
 const ProductCard = () => {

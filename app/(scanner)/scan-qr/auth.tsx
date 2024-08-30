@@ -15,6 +15,7 @@ const AuthPage = () => {
         console.log(data.token);
       });
     }
+
     console.log(token);
   }, []);
   return <></>;

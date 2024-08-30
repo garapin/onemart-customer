@@ -10,9 +10,13 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import { addItem, setTargetDatabase } from "@/lib/store/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import ApiService from "@/lib/service";
+import AuthPage from "./auth";
+import { setToken } from "@/lib/store/cartSlice";
+import Image from "next/image";
 
 const ScanQR = () => {
   const router = useRouter();
+
   const [enabled, setEnabled] = React.useState(false);
   const [qty, setQty] = React.useState(1);
   const [result, setResult] = React.useState<any>(null);
@@ -25,27 +29,67 @@ const ScanQR = () => {
   const searchParams = useSearchParams();
   const targetdatabase = searchParams.get("targetdatabase");
   const productid = searchParams.get("productid");
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(targetdatabase);
+  async function handleCameraRequest() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+      // Camera access was granted
+      console.log("Camera access allowed!");
+      const token = localStorage.getItem("token");
 
+      if (token === null) {
+        ApiService.authGuest((data) => {
+          dispatch(setToken(data.token));
+          console.log(data.token);
+          setEnabled(false);
+          if (productid !== null && targetdatabase !== null) {
+            dispatch(setTargetDatabase(targetdatabase));
+            ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
+              data.rak_id.push(searchParams.get("rakid"));
+              data.position_id.push(searchParams.get("positionid"));
+              console.log(data);
+              setProduct(data);
+              setLoading(false);
+              setResult(data);
+            });
+          }
+        });
+      } else {
+        if (productid !== null && targetdatabase !== null) {
+          dispatch(setTargetDatabase(targetdatabase));
+          ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
+            data.rak_id.push(searchParams.get("rakid"));
+            data.position_id.push(searchParams.get("positionid"));
+            console.log(data);
+            setProduct(data);
+            setLoading(false);
+            setResult(data);
+          });
+        }
+      }
+
+      // Handle the camera stream here
+    } catch (error) {
+      // Camera access was denied
+      console.error("Error accessing camera:", error);
+      if (error === "NotAllowedError") {
+        // The user denied camera access
+        console.log("Camera access denied by user.");
+      } else {
+        // An error occurred while trying to access the camera
+        console.log("Error accessing camera:", error);
+      }
+    }
+  }
   React.useEffect(() => {
+    setLoading(true);
     setEnabled(true);
     return () => {
-      console.log(productid);
-
-      setEnabled(false);
-      if (productid !== null && targetdatabase !== null) {
-        dispatch(setTargetDatabase(targetdatabase));
-        ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
-          data.rak_id.push(searchParams.get("rakid"));
-          data.position_id.push(searchParams.get("positionid"));
-          console.log(data);
-
-          setProduct(data);
-          setLoading(false);
-          setResult(data);
-        });
-      }
+      handleCameraRequest();
     };
   }, []);
 
@@ -58,11 +102,6 @@ const ScanQR = () => {
           const url = new URL(result[0]["rawValue"]);
 
           const params = url.searchParams;
-
-          // console.log(params); // 667443ee8bbc090e47dd96b4
-          // console.log(params.get("rakid")); // 66767b550f9f3b744fb640b5
-          // console.log(params.get("positionid")); // 66767b550f9f3b744fb640b7
-          // console.log(params.get("targetdatabase")); // mr-fran_puri_e51cf5fa-0b3
 
           ApiService.fetchDetailProduct(
             params.get("productid")!,
@@ -96,7 +135,10 @@ const ScanQR = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <img
-                src={result.image}
+                onClick={() => {
+                  console.log(baseUrl + result.image);
+                }}
+                src={baseUrl + result.image}
                 alt={result.name}
                 className="w-24 h-24 object-cover rounded-md"
               />
@@ -157,6 +199,8 @@ const ScanQR = () => {
         ) : (
           <div className="flex items-center justify-center">
             <img
+              width={32}
+              height={32}
               src="/images/qr-placeholder.png"
               alt="qr"
               className="w-32 h-32"

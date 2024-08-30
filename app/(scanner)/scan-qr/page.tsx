@@ -17,7 +17,6 @@ const Home = () => {
     <div>
       <Suspense fallback={<div>Loading...</div>}>
         <Provider store={store}>
-          <AuthPage />
           <ScanQR />
         </Provider>
       </Suspense>

@@ -1,5 +1,6 @@
 import { ChevronDownIconSVG } from "@/assets/chevron-down";
 import { ChevronRightIconSVG } from "@/assets/chevron-right";
+import Image from "next/image";
 import React from "react";
 
 const PaymentItem = ({ paymentMethod }: any) => {

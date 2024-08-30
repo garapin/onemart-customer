@@ -1,24 +1,19 @@
 interface InvoicesDetails {
-  invoice_label: string;
+  externalId: string;
   status: string;
-  total_with_fee: number;
-  webhook: Webhook;
+  amount: number;
+  payerEmail: string;
+  paymentMethod: string;
+  updated: string;
+  merchantName: string;
+  items: Item[];
 }
 
 interface Item {
   name: string;
   quantity: number;
   price: number;
-}
-
-interface Webhook {
-  amount: number;
-  payerEmail: string;
-  merchantName: string;
-  paymentMethod: string;
-  updated: string;
-  items: Item[];
-  invoiceUrl: string;
+  referenceId: string;
 }
 
 export type { InvoicesDetails };

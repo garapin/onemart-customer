@@ -1,0 +1,32 @@
+/* styles/nprogress.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+#nprogress {
+  @apply pointer-events: none;
+}
+
+#nprogress .bar {
+  @apply bg-blue-500 absolute z-50 top-0 left-0 w-full h-2;
+}
+
+#nprogress .peg {
+  @apply absolute right-0 w-100px h-full box-shadow-0_0_10px_blue-500 box-shadow-0_0_5px_blue-500 opacity-1 -webkit-transform-rotate-3deg_translateX-3px ms-transform-rotate-3deg_translateX-3px transform-rotate-3deg_translateX-3px;
+}
+
+#nprogress .spinner {
+  @apply absolute z-50 top-15px right-15px;
+}
+
+#nprogress .spinner-icon {
+  @apply w-18px h-18px box-sizing-border-box border-solid-2px-transparent border-top-color-blue-500 border-left-color-blue-500 border-radius-50%-webkit-animation-nprogress-spinner_400ms_linear_infinite animation-nprogress-spinner_400ms_linear_infinite;
+}
+
+.nprogress-custom-parent {
+  @apply overflow-hidden relative;
+}
+
+.nprogress-custom-parent #nprogress {
+  @apply absolute;
+}

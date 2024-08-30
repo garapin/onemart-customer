@@ -6,6 +6,7 @@ import { MailIconSVG } from "@/assets/mail";
 import { PhoneIconSVG } from "@/assets/phone";
 import InputField from "@/components/InputField";
 import SelectOption from "@/components/SelectOption";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Product } from "../lib/model/Product";
 import { useSelector, useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity } from "@/lib/store/cartSlice";
+import Image from "next/image";
 
 interface ProductDetailProps {
   product: Product;
@@ -9,12 +10,13 @@ interface ProductDetailProps {
 
 const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
   const dispatch = useDispatch();
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   return (
     <div className="flex items-center justify-between gap-2 border-b pb-4 px-6">
       <div className="flex items-center gap-4">
         <img
-          src="https://static.toiimg.com/thumb/msid-105672842/105672842.jpg?width=500&resizemode=4"
+          src={baseUrl + product.image}
           alt="carrot"
           className="w-24 h-24 object-cover rounded-md"
         />

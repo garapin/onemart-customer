@@ -1,4 +1,5 @@
 import { Product } from "@/lib/model/Product";
+import Image from "next/image";
 import React from "react";
 interface ReceiptItemProps {
   product: Product;
@@ -9,8 +10,9 @@ const ReceiptItem: React.FC<ReceiptItemProps> = ({ product }) => {
       <div className="flex flex-col justify-center py-2.5 w-full border-b border-zinc-100">
         <div className="flex gap-5 justify-between items-center w-full">
           <img
+            alt="carrot"
+            src={product.image}
             loading="lazy"
-            srcSet={product.image}
             className="object-contain shrink-0 self-stretch my-auto rounded aspect-square w-[60px]"
           />
           <div className="flex justify-between items-center self-stretch my-auto  w-full">

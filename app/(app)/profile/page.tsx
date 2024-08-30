@@ -8,6 +8,7 @@ import { LogoutIconSVG } from "@/assets/log-out";
 import { MapPinIconSVG } from "@/assets/map-pin";
 import { StoreFrontIconSVG } from "@/assets/store-front";
 import ProfileItem from "@/components/ProfileItem";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 

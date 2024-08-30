@@ -1,4 +1,9 @@
+import moment from "moment";
+
 const ApiService = {
+  formatDate: (date: string) => {
+    return moment(date).format("DD MMMM YYYY HH:mm");
+  },
   fetchDetailProduct: async (
     productid: string,
     target_database: string,
@@ -67,7 +72,7 @@ const ApiService = {
   },
 
   checkOutPayment: async (
-    invoicelable: string,
+    invoice: string,
     target_database: string,
     callback: (data: any, error?: any) => void
   ) => {
@@ -81,7 +86,7 @@ const ApiService = {
           "target-database": target_database,
           Authorization: `${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ invoicelable }),
+        body: JSON.stringify({ invoice: invoice + "&" + target_database }),
       });
       // console.log(res.headers);
 
@@ -91,7 +96,7 @@ const ApiService = {
 
       const result = await res.json();
 
-      callback(result.data);
+      callback(result.data.invoice);
 
       // setProduct(result.data);
     } catch (err: any) {
@@ -117,6 +122,16 @@ const ApiService = {
 
       return result.data;
     } catch (err: any) {}
+  },
+
+  checkToken() {
+    const token = localStorage.getItem("token");
+
+    if (token === null) {
+      return false;
+    } else {
+      return true;
+    }
   },
 };
 
