@@ -107,6 +107,7 @@ const ScanQR = () => {
           const position = params.get("position");
           const lokasi = params.get("lokasi");
           const idsupp = params.get("idsupp");
+          dispatch(setTargetDatabase(lokasi!));
 
           ApiService.fetchDetailProduct(idinven!, lokasi!, (data) => {
             data.rak_id.push(rakid);
