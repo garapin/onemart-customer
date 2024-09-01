@@ -27,8 +27,8 @@ const ScanQR = () => {
   const [error, setError] = React.useState<string | null>(null);
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
-  const targetdatabase = searchParams.get("targetdatabase");
-  const productid = searchParams.get("productid");
+  const targetdatabase = searchParams.get("lokasi");
+  const productid = searchParams.get("idinven");
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(targetdatabase);
@@ -50,7 +50,7 @@ const ScanQR = () => {
             dispatch(setTargetDatabase(targetdatabase));
             ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
               data.rak_id.push(searchParams.get("rakid"));
-              data.position_id.push(searchParams.get("positionid"));
+              data.position_id.push(searchParams.get("position"));
               console.log(data);
               setProduct(data);
               setLoading(false);
@@ -88,9 +88,8 @@ const ScanQR = () => {
   React.useEffect(() => {
     setLoading(true);
     setEnabled(true);
-    return () => {
-      handleCameraRequest();
-    };
+    handleCameraRequest();
+    return () => {};
   }, []);
 
   return (
@@ -100,22 +99,24 @@ const ScanQR = () => {
         allowMultiple={true}
         onScan={(result) => {
           const url = new URL(result[0]["rawValue"]);
+          console.log(url);
 
           const params = url.searchParams;
+          const idinven = params.get("idinven");
+          const rakid = params.get("rakid");
+          const position = params.get("position");
+          const lokasi = params.get("lokasi");
+          const idsupp = params.get("idsupp");
 
-          ApiService.fetchDetailProduct(
-            params.get("productid")!,
-            params.get("targetdatabase")!,
-            (data) => {
-              data.rak_id.push(params.get("rakid"));
-              data.position_id.push(params.get("positionid"));
-              console.log(data);
+          ApiService.fetchDetailProduct(idinven!, lokasi!, (data) => {
+            data.rak_id.push(rakid);
+            data.position_id.push(position);
+            console.log(data);
 
-              setProduct(data);
-              setLoading(false);
-              setResult(data);
-            }
-          );
+            setProduct(data);
+            setLoading(false);
+            setResult(data);
+          });
         }}
         styles={{
           video: {

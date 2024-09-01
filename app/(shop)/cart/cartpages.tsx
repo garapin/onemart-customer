@@ -62,7 +62,7 @@ const CartPage = () => {
           </button> */}
           <button
             className="text-center bg-white py-3 rounded-full flex items-center gap-2 justify-center border-2 border-primary text-primary w-full"
-            onClick={() => router.push("/scan-qr")}
+            onClick={() => router.push("/add-to-cart")}
           >
             <QrCodeIconSVG color="#102CA0" className="h-4 w-4" />{" "}
             <span> Add Item</span>

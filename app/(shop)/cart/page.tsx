@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "@/lib/store/store";
 import CartPage from "./cartpages";
 import { Toaster } from "react-hot-toast";
-import AuthPage from "@/app/(scanner)/scan-qr/auth";
+import AuthPage from "@/app/(scanner)/add-to-cart/auth";
 
 const index = () => {
   return (
