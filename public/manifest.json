@@ -1,0 +1,21 @@
+{
+  "name": "My Next.js PWA",
+  "short_name": "NextPWA",
+  "description": "My Progressive Web App built with Next.js",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "display": "standalone"
+}

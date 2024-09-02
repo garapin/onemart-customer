@@ -28,7 +28,7 @@ const ScanQR = () => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const targetdatabase = searchParams.get("lokasi");
-  const productid = searchParams.get("idinven");
+  const idstockcard = searchParams.get("idstockcard");
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(targetdatabase);
@@ -46,20 +46,24 @@ const ScanQR = () => {
           dispatch(setToken(data.token));
           console.log(data.token);
           setEnabled(false);
-          if (productid !== null && targetdatabase !== null) {
+          if (idstockcard !== null && targetdatabase !== null) {
             dispatch(setTargetDatabase(targetdatabase));
-            ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
-              console.log(data);
-              setProduct(data);
-              setLoading(false);
-              setResult(data);
-            });
+            ApiService.fetchDetailProduct(
+              idstockcard,
+              targetdatabase,
+              (data) => {
+                console.log(data);
+                setProduct(data);
+                setLoading(false);
+                setResult(data);
+              }
+            );
           }
         });
       } else {
-        if (productid !== null && targetdatabase !== null) {
+        if (idstockcard !== null && targetdatabase !== null) {
           dispatch(setTargetDatabase(targetdatabase));
-          ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
+          ApiService.fetchDetailProduct(idstockcard, targetdatabase, (data) => {
             console.log(data);
             setProduct(data);
             setLoading(false);
@@ -98,14 +102,14 @@ const ScanQR = () => {
           console.log(url);
 
           const params = url.searchParams;
-          const idinven = params.get("idinven");
+          const idstockcard = params.get("idstockcard");
           // const rakid = params.get("rakid");
           // const position = params.get("position");
           const lokasi = params.get("lokasi");
           const idsupp = params.get("idsupp");
           dispatch(setTargetDatabase(lokasi!));
 
-          ApiService.fetchDetailProduct(idinven!, lokasi!, (data) => {
+          ApiService.fetchDetailProduct(idstockcard!, lokasi!, (data) => {
             console.log(data);
 
             setProduct(data);

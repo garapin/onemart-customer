@@ -6,13 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/lib/store/store";
-import {
-  setCart,
-  removeItem,
-  setTargetDatabase,
-  setRakId,
-  setPositionId,
-} from "@/lib/store/cartSlice";
+import { setCart, removeItem, setTargetDatabase } from "@/lib/store/cartSlice";
 import { toast } from "react-hot-toast";
 import ApiService from "@/lib/service";
 
@@ -20,8 +14,6 @@ const CartPage = () => {
   const router = useRouter();
   const cart = useSelector((state: RootState) => state.cart.items);
   const total = useSelector((state: RootState) => state.cart.total);
-  const rak = useSelector((state: RootState) => state.cart.rakId);
-  const position = useSelector((state: RootState) => state.cart.positionId);
   const target_database = useSelector(
     (state: RootState) => state.cart.targetDatabase
   );
@@ -131,8 +123,6 @@ const CartPage = () => {
               sendItems.push({
                 productId: item._id,
                 quantity: item.quantity,
-                rakId: rak,
-                positionId: position,
               });
             });
 
@@ -143,16 +133,16 @@ const CartPage = () => {
             };
             console.log(data);
 
-            // ApiService.createInvoices(data, target_database, (data, error) => {
-            //   if (error) {
-            //     toast.error("Gagal membuat invoice"); // Displays a success message
-            //     return;
-            //   } else {
-            //     console.log(data.invoice.invoiceUrl);
+            ApiService.createInvoices(data, target_database, (data, error) => {
+              if (error) {
+                toast.error("Gagal membuat invoice"); // Displays a success message
+                return;
+              } else {
+                console.log(data.invoice.invoiceUrl);
 
-            //     router.push(data.invoice.invoiceUrl);
-            //   }
-            // });
+                router.push(data.invoice.invoiceUrl);
+              }
+            });
           }}
           className="text-center border-2 border-primary w-full bg-primary text-white hover:bg-primary/80 py-4 rounded-lg"
         >

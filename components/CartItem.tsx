@@ -17,7 +17,7 @@ const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
       <div className="flex items-center gap-4">
         <img
           src={baseUrl + product.image}
-          alt="carrot"
+          alt={product.name}
           className="w-24 h-24 object-cover rounded-md"
         />
         <div>

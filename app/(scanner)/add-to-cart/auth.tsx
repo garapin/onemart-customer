@@ -12,11 +12,11 @@ const AuthPage = () => {
       ApiService.authGuest((data) => {
         dispatch(setToken(data.token));
 
-        console.log(data.token);
+        // console.log(data.token);
       });
     }
 
-    console.log(token);
+    // console.log(token);
   }, []);
   return <></>;
 };

@@ -5,12 +5,12 @@ const ApiService = {
     return moment(date).format("DD MMMM YYYY HH:mm");
   },
   fetchDetailProduct: async (
-    productid: string,
+    stockid: string,
     target_database: string,
     callback: (data: any, error?: any) => void
   ) => {
     const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseApiUrl}raku/supplier/product/${productid}`;
+    const url = `${baseApiUrl}store/productbystockcard/${stockid}`;
 
     try {
       const res = await fetch(url, {
@@ -28,7 +28,7 @@ const ApiService = {
 
       const result = await res.json();
 
-      callback(result.data);
+      callback(result.data.singleProduct);
 
       // setProduct(result.data);
     } catch (err: any) {
