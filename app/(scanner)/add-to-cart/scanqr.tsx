@@ -49,8 +49,6 @@ const ScanQR = () => {
           if (productid !== null && targetdatabase !== null) {
             dispatch(setTargetDatabase(targetdatabase));
             ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
-              data.rak_id.push(searchParams.get("rakid"));
-              data.position_id.push(searchParams.get("position"));
               console.log(data);
               setProduct(data);
               setLoading(false);
@@ -62,8 +60,6 @@ const ScanQR = () => {
         if (productid !== null && targetdatabase !== null) {
           dispatch(setTargetDatabase(targetdatabase));
           ApiService.fetchDetailProduct(productid, targetdatabase, (data) => {
-            data.rak_id.push(searchParams.get("rakid"));
-            data.position_id.push(searchParams.get("positionid"));
             console.log(data);
             setProduct(data);
             setLoading(false);
@@ -103,15 +99,13 @@ const ScanQR = () => {
 
           const params = url.searchParams;
           const idinven = params.get("idinven");
-          const rakid = params.get("rakid");
-          const position = params.get("position");
+          // const rakid = params.get("rakid");
+          // const position = params.get("position");
           const lokasi = params.get("lokasi");
           const idsupp = params.get("idsupp");
           dispatch(setTargetDatabase(lokasi!));
 
           ApiService.fetchDetailProduct(idinven!, lokasi!, (data) => {
-            data.rak_id.push(rakid);
-            data.position_id.push(position);
             console.log(data);
 
             setProduct(data);
@@ -146,14 +140,16 @@ const ScanQR = () => {
               />
               <div>
                 <p className="text-slate-500 text-sm">
-                  {result.category_ref.category}
+                  {result.category_ref === null
+                    ? ""
+                    : result.category_ref.category}
                 </p>
                 <p className="font-medium">{result.name}</p>
                 <p className="font-medium">
                   Rp {result.price}
                   <span className="text-slate-500 font-light text-xs">
                     {" "}
-                    /{result.unit_ref.unit}
+                    /{result.unit_ref === null ? "" : result.unit_ref.unit}
                   </span>
                 </p>
                 <div className="flex items-center gap-2">

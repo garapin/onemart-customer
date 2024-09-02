@@ -22,7 +22,7 @@ const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
         />
         <div>
           <p className="text-slate-500 text-sm">
-            {product.category_ref.category}
+            {product.category_ref === null ? "" : product.category_ref.category}
           </p>
           <p className="font-medium line-clamp-2">{product.name}</p>
           <p className="font-light text-red-500">
@@ -31,7 +31,9 @@ const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
             </span>{" "}
             <span className="font-medium text-black">Rp.{product.price}</span>
           </p>
-          <p className="text-slate-500">{product.unit_ref.unit}</p>
+          <p className="text-slate-500">
+            {product.unit_ref === null ? "" : product.unit_ref.unit}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-2">
