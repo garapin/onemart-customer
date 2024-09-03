@@ -7,8 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Raku",
   description: "Raku customer app",
-  icons: "/favicon.ico",
-  // manifest: "public/manifest.json",
+  manifest: "manifest.json",
+  icons: {
+    icon: "/icon.png", // /public path
+  },
 };
 
 export default function RootLayout({
