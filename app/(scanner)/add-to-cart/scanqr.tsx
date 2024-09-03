@@ -52,6 +52,7 @@ const ScanQR = () => {
               idstockcard,
               targetdatabase,
               (data) => {
+                data.stockcardId = idstockcard;
                 console.log(data);
                 setProduct(data);
                 setLoading(false);
@@ -65,6 +66,8 @@ const ScanQR = () => {
           dispatch(setTargetDatabase(targetdatabase));
           ApiService.fetchDetailProduct(idstockcard, targetdatabase, (data) => {
             console.log(data);
+            data.stockcardId = idstockcard;
+
             setProduct(data);
             setLoading(false);
             setResult(data);
@@ -93,43 +96,37 @@ const ScanQR = () => {
   }, []);
 
   return (
-    <div className="h-full  relative">
+    <div className="h-full  relative items-center justify-center  flex">
       <ModalDialogConfirm />
-      <Scanner
-        allowMultiple={true}
-        onScan={(result) => {
-          const url = new URL(result[0]["rawValue"]);
-          console.log(url);
+      <div className="w-screen max-h-[600px] max-w-[600px] h-[100vw]   bg-black">
+        <Scanner
+          allowMultiple={true}
+          onScan={(result) => {
+            const url = new URL(result[0]["rawValue"]);
+            console.log(url);
 
-          const params = url.searchParams;
-          const idstockcard = params.get("idstockcard");
-          // const rakid = params.get("rakid");
-          // const position = params.get("position");
-          const lokasi = params.get("lokasi");
-          const idsupp = params.get("idsupp");
-          dispatch(setTargetDatabase(lokasi!));
+            const params = url.searchParams;
+            const idstockcard = params.get("idstockcard");
+            // const rakid = params.get("rakid");
+            // const position = params.get("position");
+            const lokasi = params.get("lokasi");
+            const idsupp = params.get("idsupp");
+            dispatch(setTargetDatabase(lokasi!));
 
-          ApiService.fetchDetailProduct(idstockcard!, lokasi!, (data) => {
-            console.log(data);
+            ApiService.fetchDetailProduct(idstockcard!, lokasi!, (data) => {
+              data.stockcardId = idstockcard;
 
-            setProduct(data);
-            setLoading(false);
-            setResult(data);
-          });
-        }}
-        styles={{
-          video: {
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          },
-          container: {
-            // height: "100%",
-          },
-        }}
-      />
+              console.log(data);
+
+              setProduct(data);
+              setLoading(false);
+              setResult(data);
+            });
+          }}
+        />
+      </div>
       <div className="bg-[#CCCCCC] h-full"></div>
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white rounded-tl-2xl rounded-tr-2xl shadow-lg space-y-3">
+      <div className="fixed bottom-0 p-4 w-full bg-white max-w-[600px] rounded-tl-2xl rounded-tr-2xl shadow-lg space-y-3">
         <div className="border-2 w-48 mx-auto"></div>
         {result ? (
           <div className="space-y-4">

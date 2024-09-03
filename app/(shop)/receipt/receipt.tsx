@@ -6,8 +6,9 @@ import { InvoicesDetails } from "@/lib/model/InvoicesDetails";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import { clearCart } from "@/lib/store/cartSlice";
+import { setCart, clearCart } from "@/lib/store/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/lib/store/store";
 
 const Receipt = () => {
   const [transaction, setTransaction] = useState<InvoicesDetails>();
@@ -18,6 +19,8 @@ const Receipt = () => {
   const targetDatabase = searchParams.get("merchant");
   const containerRef = useRef(null);
   const dispatch = useDispatch();
+
+  const cart = useSelector((state: RootState) => state.cart.items);
 
   const handleDownload = () => {
     const element = containerRef.current;
@@ -56,17 +59,25 @@ const Receipt = () => {
 
   useEffect(() => {
     setLoading(true);
+    const storedCart = localStorage.getItem("cart");
+    const cart = JSON.parse(storedCart!);
+    console.log(cart);
+
+    // console.log(storedCart || storedCart!.length > 0);
+
+    const isclear = cart === null || cart!.length === 0;
+    console.log(isclear);
+
     if (targetDatabase !== null && invoice !== null) {
-      ApiService.checkOutPayment(invoice, targetDatabase, (data) => {
+      ApiService.checkOutPayment(invoice, targetDatabase, !isclear, (data) => {
         // console.log(data.invoice);
         setTransaction(data);
-        if (
-          data.transaction.status === "PAID" ||
-          data.transaction.status === "SETTLED"
-        ) {
-          dispatch(clearCart());
-        }
+        // console.log(data);
+
         setLoading(false);
+        if (!isclear) {
+          localStorage.removeItem("cart");
+        }
       });
     }
   }, []);
@@ -153,7 +164,7 @@ const Receipt = () => {
                     </div>
                   </div>
                 </div>
-                <div className="self-stretch mb-10 px-10 h-[83.32px] flex-col justify-start items-start gap-[23.32px] flex">
+                <div className="self-stretch mb-10 px-10  flex-col justify-start items-start gap-[23.32px] flex">
                   <div className="self-stretch justify-start items-start gap-[26.65px] inline-flex">
                     <div className="grow shrink basis-0 text-[#707070]  leading-[29.98px]">
                       Item
@@ -168,14 +179,6 @@ const Receipt = () => {
                       ))}
                     </div>
                   </div>
-                  {/* <div className="self-stretch justify-start items-start gap-[26.65px] inline-flex">
-            <div className="grow shrink basis-0 text-[#707070]  leading-[29.98px]">
-              Admin Fee
-            </div>
-            <div className="text-center text-[#121212]  leading-[29.98px]">
-              IDR 193.00
-            </div>
-          </div> */}
                 </div>
               </div>
             </div>

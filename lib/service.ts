@@ -71,9 +71,15 @@ const ApiService = {
     }
   },
 
+  validateEmail: (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  },
+
   checkOutPayment: async (
     invoice: string,
     target_database: string,
+    reducestock: boolean,
     callback: (data: any, error?: any) => void
   ) => {
     const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -86,7 +92,10 @@ const ApiService = {
           "target-database": target_database,
           Authorization: `${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ invoice: invoice + "&" + target_database }),
+        body: JSON.stringify({
+          invoice: invoice + "&" + target_database,
+          reducestock,
+        }),
       });
       // console.log(res.headers);
 
@@ -95,6 +104,7 @@ const ApiService = {
       }
 
       const result = await res.json();
+      // console.log(result);
 
       callback(result.data.invoice);
 

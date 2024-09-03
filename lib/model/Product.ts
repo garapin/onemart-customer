@@ -52,6 +52,7 @@ interface Product {
   createdAt: string;
   updatedAt: string;
   quantity?: number; // Tambahkan properti quantity
+  stockcardId?: string;
 
   __v: number;
 }

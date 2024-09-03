@@ -5,6 +5,8 @@ const withPWA = require("next-pwa")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
+  reactStrictMode: false,
+
   // Tambahkan konfigurasi Next.js lainnya di sini jika diperlukan
 });
 

@@ -7,6 +7,7 @@ interface CartState {
   total: number;
   targetDatabase: string;
   token?: string;
+  email?: string;
 }
 
 const initialState: CartState = {
@@ -14,6 +15,7 @@ const initialState: CartState = {
   total: 0,
   targetDatabase: "",
   token: "",
+  email: "",
 };
 
 export const cartSlice = createSlice({
@@ -107,6 +109,12 @@ export const cartSlice = createSlice({
         localStorage.removeItem("cart");
       }
     },
+    setEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("email", action.payload);
+      }
+    },
   },
 });
 
@@ -119,6 +127,7 @@ export const {
   setTargetDatabase,
   setToken,
   clearCart,
+  setEmail,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

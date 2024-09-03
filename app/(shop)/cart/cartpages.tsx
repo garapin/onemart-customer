@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/lib/store/store";
-import { setCart, removeItem, setTargetDatabase } from "@/lib/store/cartSlice";
+import { setCart, setEmail, setTargetDatabase } from "@/lib/store/cartSlice";
 import { toast } from "react-hot-toast";
 import ApiService from "@/lib/service";
 
@@ -14,16 +14,19 @@ const CartPage = () => {
   const router = useRouter();
   const cart = useSelector((state: RootState) => state.cart.items);
   const total = useSelector((state: RootState) => state.cart.total);
+  const email = useSelector((state: RootState) => state.cart.email);
   const target_database = useSelector(
     (state: RootState) => state.cart.targetDatabase
   );
 
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const dispatch = useDispatch();
+  // console.log(cart);
 
   React.useEffect(() => {
     const storedCart = localStorage.getItem("cart");
     const storedDb = localStorage.getItem("targetdatabase");
+    const storedEmail = localStorage.getItem("email");
 
     if (storedCart) {
       dispatch(setCart(JSON.parse(storedCart)));
@@ -31,11 +34,14 @@ const CartPage = () => {
     if (storedDb) {
       dispatch(setTargetDatabase(storedDb));
     }
+    if (storedEmail) {
+      dispatch(setEmail(storedEmail));
+    }
   }, [dispatch]);
 
   return (
     <div>
-      <div className="flex items-center gap-2 border-b pb-6 p-6">
+      <div className="flex  items-center gap-2 border-b pb-6  p-6">
         <ChevronLeftIconSVG
           className="w-4 h-4 cursor-pointer"
           onClick={() => router.back()}
@@ -47,7 +53,7 @@ const CartPage = () => {
           <CartItem key={item._id} product={item} />
         ))}
       </div>
-      <div className="px-6 space-y-4 border-b pb-60">
+      <div className="px-6 space-y-4 border-b pb-60 ">
         <div>
           <p className="font-medium">Butuh Yang Lainnya? </p>
           <p className="text-sm text-slate-500">
@@ -77,9 +83,12 @@ const CartPage = () => {
           <div className="  self-stretch h-12 py-3.5 rounded border border-primary justify-start items-center gap-2.5 inline-flex w-full">
             <div className="w-4 h-4 justify-center items-center flex"></div>
             <input
+              value={email}
               onChange={(e) => {
                 // console.log(e.target.value);
-                setEmail(e.target.value);
+
+                dispatch(setEmail(e.target.value));
+                // console.log(ApiService.validateEmail(e.target.value));
               }}
               type="text"
               placeholder="Input email address"
@@ -102,7 +111,7 @@ const CartPage = () => {
         </div> */}
       </div>
       <div
-        className="fixed bottom-0 left-0 right-0 p-4 bg-white rounded-tl-2xl rounded-tr-2xl shadow-2xl space-y-3"
+        className="fixed  bottom-0 w-full p-4 max-w-[600px] rounded-tl-2xl rounded-tr-2xl shadow-2xl space-y-3"
         style={{
           boxShadow: "0px -4px 10px -2px #0000000D",
         }}
@@ -118,10 +127,16 @@ const CartPage = () => {
               toast.error("Email harus diisi"); // Displays a success message
               return;
             }
+            if (!ApiService.validateEmail(email!)) {
+              toast.error("Email tidak valid"); // Displays a success message
+              return;
+            }
+
             const sendItems: any[] = []; // Array that can hold any type of elements
             cart.forEach((item) => {
               sendItems.push({
                 productId: item._id,
+                stockcardId: item.stockcardId,
                 quantity: item.quantity,
               });
             });
