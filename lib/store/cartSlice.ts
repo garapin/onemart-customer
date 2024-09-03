@@ -100,6 +100,13 @@ export const cartSlice = createSlice({
         localStorage.setItem("token", action.payload);
       }
     },
+    clearCart: (state) => {
+      state.items = [];
+      state.total = 0;
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("cart");
+      }
+    },
   },
 });
 
@@ -111,6 +118,7 @@ export const {
   setCart,
   setTargetDatabase,
   setToken,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

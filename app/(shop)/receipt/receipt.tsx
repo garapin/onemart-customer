@@ -6,6 +6,8 @@ import { InvoicesDetails } from "@/lib/model/InvoicesDetails";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { clearCart } from "@/lib/store/cartSlice";
 
 const Receipt = () => {
   const [transaction, setTransaction] = useState<InvoicesDetails>();
@@ -15,6 +17,7 @@ const Receipt = () => {
   const invoice = searchParams.get("invoice");
   const targetDatabase = searchParams.get("merchant");
   const containerRef = useRef(null);
+  const dispatch = useDispatch();
 
   const handleDownload = () => {
     const element = containerRef.current;
@@ -57,6 +60,12 @@ const Receipt = () => {
       ApiService.checkOutPayment(invoice, targetDatabase, (data) => {
         // console.log(data.invoice);
         setTransaction(data);
+        if (
+          data.transaction.status === "PAID" ||
+          data.transaction.status === "SETTLED"
+        ) {
+          dispatch(clearCart());
+        }
         setLoading(false);
       });
     }
