@@ -17,7 +17,7 @@ const AuthPage = () => {
     }
 
     // console.log(token);
-  }, []);
+  });
   return <></>;
 };
 

@@ -9,7 +9,9 @@ const ReceiptItem: React.FC<ReceiptItemProps> = ({ product }) => {
     <div className="flex flex-col px-10 mt-4 w-full max-w-full">
       <div className="flex flex-col justify-center py-2.5 w-full border-b border-zinc-100">
         <div className="flex gap-5 justify-between items-center w-full">
-          <img
+          <Image
+            width={60}
+            height={60}
             alt="carrot"
             src={product.image}
             loading="lazy"

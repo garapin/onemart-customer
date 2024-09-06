@@ -21,7 +21,26 @@ const Receipt = () => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state: RootState) => state.cart.items);
+  const handleShare = () => {
+    const url = window.location.href; // Mendapatkan URL saat ini
 
+    if (navigator.share) {
+      // Jika perangkat mendukung Web Share API
+      navigator
+        .share({
+          title: "Check out this transaction",
+          url: url,
+        })
+        .then(() => console.log("Successful share"))
+        .catch((error) => console.log("Error sharing:", error));
+    } else {
+      // Fallback untuk perangkat yang tidak mendukung Web Share API
+      navigator.clipboard
+        .writeText(url)
+        .then(() => alert("Link copied to clipboard"))
+        .catch((error) => console.error("Error copying to clipboard:", error));
+    }
+  };
   const handleDownload = () => {
     const element = containerRef.current;
     html2canvas(element!, {
@@ -72,7 +91,7 @@ const Receipt = () => {
       ApiService.checkOutPayment(invoice, targetDatabase, !isclear, (data) => {
         // console.log(data.invoice);
         setTransaction(data);
-        // console.log(data);
+        console.log(data);
 
         setLoading(false);
         if (!isclear) {
@@ -117,7 +136,10 @@ const Receipt = () => {
                     !
                   </div>
                   <div className="text-zinc-950 text-2xl font-bold">
-                    Rp. {transaction?.amount}
+                    Rp.{" "}
+                    {new Intl.NumberFormat("id-ID").format(
+                      transaction?.amount || 0
+                    )}
                   </div>
                 </div>
               </div>
@@ -164,44 +186,113 @@ const Receipt = () => {
                     </div>
                   </div>
                 </div>
-                <div className="self-stretch mb-10 px-10  flex-col justify-start items-start gap-[23.32px] flex">
-                  <div className="self-stretch justify-start items-start gap-[26.65px] inline-flex">
-                    <div className="grow shrink basis-0 text-[#707070]  leading-[29.98px]">
-                      Item
-                    </div>
-                    <div className="text-start text-sm text-[#121212]  leading-[29.98px]">
+                <div className="self-stretch mb-10 px-8  flex-col justify-start items-start gap-[23.32px] flex">
+                  <table className="w-full text-sm text-[#121212] leading-[29.98px]">
+                    <thead>
+                      <tr>
+                        <th className="text-left p-2 font-normal text-[#121212]">
+                          Item Name
+                        </th>
+                        <th className="text-center p-2 font-normal text-[#121212]">
+                          Quantity
+                        </th>
+                        <th className="text-right p-2 font-normal text-[#121212]">
+                          Total Harga
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
                       {transaction?.items.map((item, index) => (
-                        <div key={index}>
-                          <div>{item.name}</div>
-                          <div>Price : Rp.{item.price}</div>
-                          <div>Qty : {item.quantity}</div>
-                        </div>
+                        <tr key={index}>
+                          <td className="p-2 font-normal text-[#121212]">
+                            <div>{item.name}</div>
+                            <div className="text-xs text-[#121212]">
+                              Rp.
+                              {new Intl.NumberFormat("id-ID").format(
+                                item?.price || 0
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-2 font-normal text-center text-[#121212]">
+                            x {item.quantity}
+                          </td>
+                          <td className="p-2 font-normal text-right text-[#121212]">
+                            <div className="text-sm text-[#121212]">
+                              {/* <div className="line-through text-red-500">
+                                Rp.{item.price}
+                              </div> */}
+                              <div className="ml-2">
+                                Rp.
+                                {new Intl.NumberFormat("id-ID").format(
+                                  item?.price || 0
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
                       ))}
-                    </div>
-                  </div>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td className="pl-2">
+                          <hr className="border-t-2 border-gray-300" />
+                        </td>
+                        <td>
+                          <hr className="border-t-2 border-gray-300" />
+                        </td>
+                        <td className="pr-2">
+                          <hr className="border-t-2 border-gray-300" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-2 font-bold text-left">Total Harga</td>
+                        <td></td>
+                        <td className="p-2 font-bold text-right">
+                          Rp.
+                          {new Intl.NumberFormat("id-ID").format(
+                            transaction?.items.reduce(
+                              (acc, item) => acc + item.price * item.quantity,
+                              0
+                            ) || 0
+                          )}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
               </div>
             </div>
-            <div className="pt-10 px-8 w-full">
-              <button
-                onClick={() => {
-                  transaction?.status === "PAID" ||
+            <div className="pt-10 px-8 w-full flex space-x-4">
+              <div className="flex-1">
+                <button
+                  onClick={() => {
+                    transaction?.status === "PAID" ||
+                    transaction?.status === "SETTLED"
+                      ? handleDownload()
+                      : transaction?.status === "EXPIRED"
+                      ? router.push("/add-to-cart")
+                      : router.push("transaction?.webhook.invoiceUrl");
+                  }}
+                  className="text-center bg-primary py-3 rounded-full flex items-center justify-center border-2 text-white w-full"
+                  type="button"
+                >
+                  {transaction?.status === "PAID" ||
                   transaction?.status === "SETTLED"
-                    ? handleDownload()
+                    ? "Download Receipt"
                     : transaction?.status === "EXPIRED"
-                    ? router.push("/scan-qr")
-                    : router.push("transaction?.webhook.invoiceUrl");
-                }}
-                className="text-center bg-primary py-3 rounded-full flex items-center justify-center border-2 text-white w-full"
-                type="button"
-              >
-                {transaction?.status === "PAID" ||
-                transaction?.status === "SETTLED"
-                  ? "Download Receipt"
-                  : transaction?.status === "EXPIRED"
-                  ? "Order Again"
-                  : "Pay Now"}
-              </button>
+                    ? "Order Again"
+                    : "Pay Now"}
+                </button>
+              </div>
+              <div className="flex-1">
+                <button
+                  onClick={handleShare}
+                  className="text-center bg-primary py-3 rounded-full flex items-center justify-center border-2 text-white w-full"
+                  type="button"
+                >
+                  Share
+                </button>
+              </div>
             </div>
           </div>
         )}

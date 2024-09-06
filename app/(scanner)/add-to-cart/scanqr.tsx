@@ -28,7 +28,7 @@ const ScanQR = () => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const targetdatabase = searchParams.get("lokasi");
-  const productid = searchParams.get("inventory_id");
+  const productid = searchParams.get("product_id");
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(targetdatabase);
@@ -102,7 +102,7 @@ const ScanQR = () => {
             console.log(result);
 
             const params = url.searchParams;
-            const productid = params.get("inventory_id");
+            const productid = params.get("product_id");
             // const rakid = params.get("rakid");
             // const position = params.get("position");
             const lokasi = params.get("lokasi");
@@ -127,7 +127,9 @@ const ScanQR = () => {
         {result ? (
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <img
+              <Image
+                width={24}
+                height={24}
                 onClick={() => {
                   console.log(baseUrl + result.image);
                 }}
@@ -193,7 +195,7 @@ const ScanQR = () => {
           </div>
         ) : (
           <div className="flex items-center justify-center">
-            <img
+            <Image
               width={32}
               height={32}
               src="/images/qr-placeholder.png"

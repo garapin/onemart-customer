@@ -9,7 +9,7 @@ const PaymentItem = ({ paymentMethod }: any) => {
     <div className="space-y-4 border-b-slate-100 border-b pb-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 cursor-pointer">
-          <img
+          <Image
             src={paymentMethod.image}
             alt={paymentMethod.name}
             className="w-6"
@@ -42,7 +42,13 @@ const PaymentItem = ({ paymentMethod }: any) => {
               key={child.id}
               className="flex items-center gap-2 cursor-pointer"
             >
-              <img src={child.image} alt={child.name} className="w-8" />
+              <Image
+                height={8}
+                width={8}
+                src={child.image}
+                alt={child.name}
+                className="w-8"
+              />
               <h1>{child.name}</h1>
             </div>
           ))}

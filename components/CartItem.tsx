@@ -15,7 +15,9 @@ const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
   return (
     <div className="flex items-center justify-between gap-2 border-b pb-4 px-6">
       <div className="flex items-center gap-4">
-        <img
+        <Image
+          width={24}
+          height={24}
           src={baseUrl + product.image}
           alt={product.name}
           className="w-24 h-24 object-cover rounded-md"

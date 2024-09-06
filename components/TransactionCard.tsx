@@ -6,7 +6,9 @@ const TransactionCard = ({ data }: any) => {
   return (
     <div className="flex items-center justify-between border-b pb-4">
       <div className="flex items-center gap-2">
-        <img
+        <Image
+          width={16}
+          height={16}
           src="https://static.toiimg.com/thumb/msid-105672842/105672842.jpg?width=500&resizemode=4"
           alt="carrot"
           className="w-16 h-16 object-cover rounded-md"

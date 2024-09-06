@@ -13,7 +13,9 @@ const LoginPage = () => {
       <div></div>
       <div className="space-y-4 w-full p-6">
         <div className="flex justify-center  ">
-          <img
+          <Image
+            width={24}
+            height={24}
             className="justify-center w-24 h-24"
             alt="Mask group"
             src="https://c.animaapp.com/3KnTqDg0/img/mask-group@2x.png"

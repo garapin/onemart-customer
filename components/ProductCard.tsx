@@ -5,7 +5,9 @@ import React from "react";
 const ProductCard = () => {
   return (
     <div className="shadow-md rounded-bl-md rounded-br-md">
-      <img
+      <Image
+        width={500}
+        height={500}
         src="https://static.toiimg.com/thumb/msid-105672842/105672842.jpg?width=500&resizemode=4"
         alt="carrot"
         className="w-full h-40 object-cover rounded-tl-md rounded-tr-md"

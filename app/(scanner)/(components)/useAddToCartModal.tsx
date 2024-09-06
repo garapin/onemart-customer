@@ -21,7 +21,9 @@ export const useAddToCartModal = () => {
       openModal && (
         <div className="fixed z-30 px-6 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded-lg space-y-2 text-center items-center">
-            <img
+            <Image
+              width={32}
+              height={32}
               src="/images/success.png"
               alt="qr"
               className="w-32 h-32 mx-auto"

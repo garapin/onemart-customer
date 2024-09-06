@@ -59,7 +59,9 @@ const Register = () => {
       />
       <div className="flex items-center gap-2">
         <div className="space-y-1">
-          <img
+          <Image
+            width={24}
+            height={24}
             src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Location_map_Jakarta.png"
             alt="jakarta"
             className="w-16 h-16 min-w-16 object-cover"

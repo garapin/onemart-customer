@@ -68,7 +68,9 @@ const Profile = () => {
     <div>
       <div className="bg-gradient-to-r from-[#373B44] to-[#0C2BAA] p-6 mb-2">
         <div className="flex items-center gap-4">
-          <img
+          <Image
+            width={24}
+            height={24}
             src="https://ffis3.is3.cloudhost.id/profile/photo/1598/raditya-dika.jpg"
             alt="profile"
             className="w-24 h-24 rounded-full"
