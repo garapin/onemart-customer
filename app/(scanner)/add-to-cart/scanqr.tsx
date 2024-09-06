@@ -28,7 +28,7 @@ const ScanQR = () => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const targetdatabase = searchParams.get("lokasi");
-  const productid = searchParams.get("productid");
+  const productid = searchParams.get("inventory_id");
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(targetdatabase);
@@ -102,7 +102,7 @@ const ScanQR = () => {
             console.log(url);
 
             const params = url.searchParams;
-            const productid = params.get("productid");
+            const productid = params.get("inventory_id");
             // const rakid = params.get("rakid");
             // const position = params.get("position");
             const lokasi = params.get("lokasi");

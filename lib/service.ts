@@ -5,12 +5,12 @@ const ApiService = {
     return moment(date).format("DD MMMM YYYY HH:mm");
   },
   fetchDetailProduct: async (
-    productid: string,
+    inventory_id: string,
     target_database: string,
     callback: (data: any, error?: any) => void
   ) => {
     const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseApiUrl}store/product/${productid}`;
+    const url = `${baseApiUrl}store/product/byinvid/${inventory_id}`;
 
     try {
       const res = await fetch(url, {
