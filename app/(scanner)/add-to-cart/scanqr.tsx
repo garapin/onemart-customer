@@ -99,7 +99,7 @@ const ScanQR = () => {
           allowMultiple={true}
           onScan={(result) => {
             const url = new URL(result[0]["rawValue"]);
-            console.log(url);
+            console.log(result);
 
             const params = url.searchParams;
             const productid = params.get("inventory_id");

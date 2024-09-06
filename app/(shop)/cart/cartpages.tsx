@@ -135,8 +135,7 @@ const CartPage = () => {
             const sendItems: any[] = []; // Array that can hold any type of elements
             cart.forEach((item) => {
               sendItems.push({
-                productId: item._id,
-                stockcardId: item.stockcardId,
+                product: item,
                 quantity: item.quantity,
               });
             });
