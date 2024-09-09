@@ -5,6 +5,9 @@ const withPWA = require("next-pwa")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
+  images: {
+    domains: [process.env.NEXT_PUBLIC_IMAGE_DOMAIN],
+  },
   reactStrictMode: false,
 
   // Tambahkan konfigurasi Next.js lainnya di sini jika diperlukan
