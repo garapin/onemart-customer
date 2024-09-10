@@ -6,7 +6,11 @@ const withPWA = require("next-pwa")({
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
   images: {
-    domains: [process.env.NEXT_PUBLIC_IMAGE_DOMAIN],
+    domains: [
+      "static.toiimg.com",
+      "garapinpos-test.garapin.cloud",
+      "localhost6000.fando.id",
+    ],
   },
   reactStrictMode: false,
 
