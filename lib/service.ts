@@ -20,18 +20,22 @@ const ApiService = {
           Authorization: `${localStorage.getItem("token")}`,
         },
       });
-      // console.log(res.headers);
-
+      console.log(res.status);
+      if (res.status === 400) {
+        callback(null, "Product not found");
+      }
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
 
       const result = await res.json();
+      // console.log(result.status);
 
-      callback(result.data);
+      callback(result);
 
       // setProduct(result.data);
     } catch (err: any) {
+      console.log(err);
     } finally {
     }
   },
