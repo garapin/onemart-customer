@@ -44,31 +44,24 @@ const Receipt = () => {
   const handleDownload = () => {
     const element = containerRef.current;
     html2canvas(element!, {
-      scale: 2, // Meningkatkan resolusi tangkapan layar
-      useCORS: true, // Mengatasi masalah gambar yang diambil dari sumber lain
-      logging: true, // Mengaktifkan log untuk debug
-      allowTaint: true, // Mengizinkan canvas menampung gambar dari domain lain
+      scale: 2, // Increase the screenshot resolution
+      useCORS: true, // Handle images from other sources
+      logging: true, // Enable logs for debugging
+      allowTaint: true, // Allow canvas to store images from other domains
     })
       .then((canvas: HTMLCanvasElement) => {
         const imgData: string = canvas.toDataURL("image/png");
-        const pdf: jsPDF = new jsPDF("p", "mm");
 
-        const imgWidth = 210; // PDF page width in mm (A4 size)
-        const pageHeight = 300; // PDF page height in mm (A4 size)
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
+        const margin = 10; // Margin in mm
+        const imgWidth = 210 - margin * 2; // PDF page width in mm (A4 size) minus margins
+        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate image height
 
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        const pdf: jsPDF = new jsPDF("p", "mm", [
+          210, // Width (A4)
+          imgHeight + margin * 2, // Dynamically calculated height based on the content
+        ]);
 
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
+        pdf.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
         pdf.save("invoices.pdf");
       })
       .catch((error) => {
