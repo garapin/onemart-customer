@@ -217,7 +217,7 @@ const Receipt = () => {
                               <div className="ml-2">
                                 Rp.
                                 {new Intl.NumberFormat("id-ID").format(
-                                  item?.price || 0
+                                  item?.price * item?.quantity || 0
                                 )}
                               </div>
                             </div>
