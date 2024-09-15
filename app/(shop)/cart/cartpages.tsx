@@ -146,7 +146,7 @@ const CartPage = () => {
               items: sendItems,
               total,
             };
-            console.log(data);
+            console.log(target_database);
 
             ApiService.createInvoices(data, target_database, (data, error) => {
               if (error) {

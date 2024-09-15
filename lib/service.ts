@@ -97,20 +97,18 @@ const ApiService = {
           Authorization: `${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          invoice: invoice + "&" + target_database,
-          reducestock,
+          invoice: invoice + "&&" + target_database + "&&RAKU",
         }),
       });
-      // console.log(res.headers);
 
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
 
       const result = await res.json();
-      // console.log(result);
+      console.log(result);
 
-      callback(result.data.invoice);
+      callback(result.data);
 
       // setProduct(result.data);
     } catch (err: any) {

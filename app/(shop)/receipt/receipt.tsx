@@ -83,7 +83,7 @@ const Receipt = () => {
     if (targetDatabase !== null && invoice !== null) {
       ApiService.checkOutPayment(invoice, targetDatabase, !isclear, (data) => {
         // console.log(data.invoice);
-        setTransaction(data);
+        setTransaction(data.invoices[0]);
         console.log(data);
 
         setLoading(false);
