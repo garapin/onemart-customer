@@ -15,6 +15,7 @@ import ApiService from "@/lib/service";
 import AuthPage from "./auth";
 import { setToken } from "@/lib/store/cartSlice";
 import Image from "next/image";
+import formatRupiah from "../../../lib/formatRupiah"; // Adjust the import path as necessary
 
 const ScanQR = () => {
   const router = useRouter();
@@ -191,7 +192,7 @@ const ScanQR = () => {
                   </p>
                   <p className="font-medium">{result.name}</p>
                   <p className="font-medium">
-                    Rp {result.price}
+                    {formatRupiah(result.price)}
                     <span className="text-slate-500 font-light text-xs">
                       {" "}
                       /{result.unit_ref === null ? "" : result.unit_ref.unit}
@@ -216,7 +217,7 @@ const ScanQR = () => {
               </div>
               <div className="flex items-center gap-2 justify-between">
                 <p className="font-semibold">Total Pembayaran</p>
-                <p className="font-semibold">Rp.{result.price}</p>
+                <p className="font-semibold">{formatRupiah(result.price)}</p>
               </div>
               <div className="flex items-center gap-2">
                 <button

@@ -3,6 +3,7 @@ import { Product } from "../lib/model/Product";
 import { useSelector, useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity } from "@/lib/store/cartSlice";
 import Image from "next/image";
+import formatRupiah from "../lib/formatRupiah"; // Adjust the import path as necessary
 
 interface ProductDetailProps {
   product: Product;
@@ -29,9 +30,11 @@ const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
           <p className="font-medium line-clamp-2">{product.name}</p>
           <p className="font-light text-red-500">
             <span className="line-through text-sm">
-              {product.discount === 0 ? "" : `Rp.${product.discount}`}
+              {product.discount === 0 ? "" : formatRupiah(product.discount)}
             </span>{" "}
-            <span className="font-medium text-black">Rp.{product.price}</span>
+            <span className="font-medium text-black">
+              {formatRupiah(product.price)}
+            </span>
           </p>
           <p className="text-slate-500">
             {product.unit_ref === null ? "" : product.unit_ref.unit}

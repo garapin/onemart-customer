@@ -9,6 +9,7 @@ import { RootState } from "@/lib/store/store";
 import { setCart, setEmail, setTargetDatabase } from "@/lib/store/cartSlice";
 import { toast } from "react-hot-toast";
 import ApiService from "@/lib/service";
+import formatRupiah from "../../../lib/formatRupiah"; // Adjust the import path as necessary
 
 const CartPage = () => {
   const router = useRouter();
@@ -111,7 +112,7 @@ const CartPage = () => {
         </div> */}
       </div>
       <div
-        className="fixed  bottom-0 w-full p-4 max-w-[600px] rounded-tl-2xl rounded-tr-2xl shadow-2xl space-y-3"
+        className="fixed  bottom-0 w-full p-4 max-w-[600px] bg-white rounded-tl-2xl rounded-tr-2xl shadow-2xl space-y-3"
         style={{
           boxShadow: "0px -4px 10px -2px #0000000D",
         }}
@@ -119,7 +120,7 @@ const CartPage = () => {
         <div className="border-2 w-48 mx-auto"></div>
         <div className="flex items-center gap-2 justify-between py-4">
           <p className="font-semibold">Total Pembayaran</p>
-          <p className="font-semibold">Rp.{total}</p>
+          <p className="font-semibold">{formatRupiah(total)}</p>
         </div>
         <button
           onClick={() => {
