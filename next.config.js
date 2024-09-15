@@ -9,6 +9,7 @@ const nextConfig = withPWA({
     domains: [
       "static.toiimg.com",
       "garapinpos-test.garapin.cloud",
+      "garapinpos.garapin.cloud",
       "localhost6000.fando.id",
     ],
   },
