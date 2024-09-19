@@ -118,7 +118,7 @@ const ScanQR = () => {
 
   return (
     <div>
-      <div className="w-full">
+      <div className="w-screen">
         <ToastLite
           open={isOpen}
           duration={3}

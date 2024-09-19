@@ -10,7 +10,7 @@ const ApiService = {
     callback: (data: any, error?: any) => void
   ) => {
     const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseApiUrl}store/product/${product_id}`;
+    const url = `${baseApiUrl}/raku/supplier/product/${product_id}`;
 
     try {
       const res = await fetch(url, {
@@ -21,8 +21,8 @@ const ApiService = {
         },
       });
       console.log(res.status);
-      if (res.status === 400) {
-        callback(null, "Product not found");
+      if (res.status === 204) {
+        callback(null, "Product Doesn't Exist");
       }
       if (!res.ok) {
         throw new Error("Failed to fetch data");
