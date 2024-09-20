@@ -34,7 +34,8 @@ export const cartSlice = createSlice({
         state.items.push({ ...product, quantity: qty });
       }
       state.total = state.items.reduce(
-        (sum, item) => sum + item.price * (item.quantity || 1),
+        (sum, item) =>
+          sum + (item.price - item.discount) * (item.quantity || 1),
         0
       );
       if (typeof window !== "undefined") {
@@ -44,7 +45,8 @@ export const cartSlice = createSlice({
     removeItem: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item._id !== action.payload);
       state.total = state.items.reduce(
-        (sum, item) => sum + item.price * (item.quantity || 1),
+        (sum, item) =>
+          sum + (item.price - item.discount) * (item.quantity || 1),
         0
       );
       if (typeof window !== "undefined") {
@@ -57,7 +59,8 @@ export const cartSlice = createSlice({
         item.quantity = (item.quantity || 1) + 1;
       }
       state.total = state.items.reduce(
-        (sum, item) => sum + item.price * (item.quantity || 1),
+        (sum, item) =>
+          sum + (item.price - item.discount) * (item.quantity || 1),
         0
       );
       if (typeof window !== "undefined") {
@@ -73,7 +76,8 @@ export const cartSlice = createSlice({
         }
       }
       state.total = state.items.reduce(
-        (sum, item) => sum + item.price * (item.quantity || 1),
+        (sum, item) =>
+          sum + (item.price - item.discount) * (item.quantity || 1),
         0
       );
       if (typeof window !== "undefined") {
@@ -83,7 +87,8 @@ export const cartSlice = createSlice({
     setCart: (state, action: PayloadAction<Product[]>) => {
       state.items = action.payload;
       state.total = state.items.reduce(
-        (sum, item) => sum + item.price * (item.quantity || 1),
+        (sum, item) =>
+          sum + (item.price - item.discount) * (item.quantity || 1),
         0
       );
       if (typeof window !== "undefined") {

@@ -192,7 +192,16 @@ const ScanQR = () => {
                   </p>
                   <p className="font-medium">{result.name}</p>
                   <p className="font-medium">
-                    {formatRupiah(result.price)}
+                    <p className="font-light text-red-500">
+                      <span className="line-through text-sm">
+                        {result.discount === 0
+                          ? ""
+                          : formatRupiah(result.price)}
+                      </span>{" "}
+                      <span className="font-medium text-black">
+                        {formatRupiah(result.price - result.discount)}
+                      </span>
+                    </p>
                     <span className="text-slate-500 font-light text-xs">
                       {" "}
                       /{result.unit_ref === null ? "" : result.unit_ref.unit}

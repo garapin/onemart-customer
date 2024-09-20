@@ -30,10 +30,10 @@ const CartItem: React.FC<ProductDetailProps> = ({ product }) => {
           <p className="font-medium line-clamp-2">{product.name}</p>
           <p className="font-light text-red-500">
             <span className="line-through text-sm">
-              {product.discount === 0 ? "" : formatRupiah(product.discount)}
+              {product.discount === 0 ? "" : formatRupiah(product.price)}
             </span>{" "}
             <span className="font-medium text-black">
-              {formatRupiah(product.price)}
+              {formatRupiah(product.price - product.discount)}
             </span>
           </p>
           <p className="text-slate-500">
