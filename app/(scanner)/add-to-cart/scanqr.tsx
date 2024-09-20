@@ -208,25 +208,27 @@ const ScanQR = () => {
                     </span>
                   </p>
                   <div className="flex items-center gap-2">
-                    <div
+                    <button
                       onClick={() => qty > 1 && setQty(qty - 1)}
                       className="cursor-pointer h-9 w-9 flex items-center justify-center rounded-full text-black text-lg bg-slate-300"
                     >
                       -
-                    </div>
+                    </button>
                     <p>{qty}</p>
-                    <div
+                    <button
                       onClick={() => setQty(qty + 1)}
                       className="cursor-pointer h-9 w-9 flex items-center justify-center rounded-full text-white text-lg bg-slate-600"
                     >
                       +
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2 justify-between">
                 <p className="font-semibold">Total Pembayaran</p>
-                <p className="font-semibold">{formatRupiah(result.price)}</p>
+                <p className="font-semibold">
+                  {formatRupiah((result.price - result.discount) * qty)}
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 <button
